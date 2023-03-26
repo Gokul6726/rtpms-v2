@@ -35,14 +35,23 @@
       <!--Container Main start-->
       <div class="height-100 bg-light">
           <h4>Patient Logs</h4>
-          <br><br><br>
+          <br>
           <div>
-          <h3>Patient 1</h3>
-          <p id="demo"></p>
+
+          <h4>Patient :</h4>
+          <select class="form-select" aria-label="Default select example" id="patientNo">
+            <!-- <option selected>Open this select menu</option> -->
+            <option value="1943514">One</option>
+            <option value="1943517">Two</option>
+            <option value="1943526">Three</option>
+          </select>
+          <br>
           <div class="form-group mx-sm-3 mb-2">
             <label for="inputnumber" class="sr-only">Last</label>
             <input type="number"  id="inputnumber" value="5">
             <label for="inputnumber" class="sr-only">Values :</label>
+            <p id="demo"></p>
+            <p id="demo2"></p>
           </div>
           <div id="data-table"></div>
           </div>
@@ -92,10 +101,14 @@ linkColor.forEach(l=> l.addEventListener('click', colorLink))
 	<script>
     function getData() {
 		$(document).ready(function() {
-      var x = 10;
-      x = document.getElementById("inputnumber").value;
+      
+      var x = document.getElementById("inputnumber").value;
       document.getElementById("demo").innerHTML = x;
-			$.getJSON('https://api.thingspeak.com/channels/1943514/feeds.json?results='+ x, function(data) {
+
+      var channel = document.getElementById("patientNo").value;
+      document.getElementById("demo").innerHTML = channel;
+
+			$.getJSON('https://api.thingspeak.com/channels/'+ channel +'/feeds.json?results='+ x, function(data) {
 				var table = "<table class='table'><tr><th>Timestamp</th><th>Pulse</th><th>SpO2</th><th>Temperature</th></tr>";
 				$.each(data.feeds, function(index, value) {
           const timestamp = value.created_at;
